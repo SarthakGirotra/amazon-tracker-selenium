@@ -146,14 +146,12 @@ class amazon_api:
             rating = rating.get_attribute('title')
             return rating
         except Exception as e:
-            print(e)
             return None
 
     def get_no_of_ratings(self):
         try:
             return self.driver.find_element_by_id('acrCustomerReviewText').text
         except Exception as e:
-            print(e)
             return None
 
     def shorten_url(self, asin):
