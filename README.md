@@ -7,3 +7,5 @@ This script uses [chromedriver](https://chromedriver.chromium.org/downloads)
 - Add item name to config.py
 
 - Create folder named reports inside the directory
+
+- Run tracker.py
