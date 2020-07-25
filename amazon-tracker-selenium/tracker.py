@@ -147,7 +147,6 @@ class amazon_api:
             return rating
         except Exception as e:
             print(e)
-            print(f"Can't get rating of a product - {self.driver.current_url}")
             return None
 
     def get_no_of_ratings(self):
