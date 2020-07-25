@@ -107,6 +107,8 @@ class amazon_api:
         title = self.get_title()
         seller = self.get_seller()
         price = self.get_price()
+        rating = self.get_rating()
+        number_of_ratings = self.get_no_of_ratings()
         if title and seller and price:
 
             product_info = {
@@ -114,7 +116,9 @@ class amazon_api:
                 'url': product_short_url,
                 'title': title,
                 'seller': seller,
-                'price': price
+                'price': price,
+                'rating': rating,
+                'no': number_of_ratings
             }
             return product_info
         else:
@@ -134,6 +138,23 @@ class amazon_api:
         except Exception as e:
             print(e)
             print(f"Can't get title of a product - {self.driver.current_url}")
+            return None
+
+    def get_rating(self):
+        try:
+            rating = self.driver.find_element_by_id('acrPopover')
+            rating = rating.get_attribute('title')
+            return rating
+        except Exception as e:
+            print(e)
+            print(f"Can't get rating of a product - {self.driver.current_url}")
+            return None
+
+    def get_no_of_ratings(self):
+        try:
+            return self.driver.find_element_by_id('acrCustomerReviewText').text
+        except Exception as e:
+            print(e)
             return None
 
     def shorten_url(self, asin):
