@@ -19,6 +19,7 @@ class Gen_rep:
             'title': self.file_name,
             'date': self.get_now(),
             'cheapest_item': self.cheapest_item(),
+            'Most Popular': self.most_popular(),
             'currency': self.currency,
             'base_link': self.base_link,
             'products': self.data
@@ -39,6 +40,14 @@ class Gen_rep:
         except Exception as e:
             print(e)
             print("Problem with sorting elements")
+            return None
+
+    def most_popular(self):
+        try:
+            return sorted(self.data, key=lambda k: k['number of ratings'])[-1]
+        except Exception as e:
+            print(e)
+            print('problem with sorting number of ratings')
             return None
 
 
@@ -118,7 +127,7 @@ class amazon_api:
                 'seller': seller,
                 'price': price,
                 'rating': rating,
-                'no': number_of_ratings
+                'number of ratings': number_of_ratings
             }
             return product_info
         else:
@@ -150,8 +159,20 @@ class amazon_api:
 
     def get_no_of_ratings(self):
         try:
-            return self.driver.find_element_by_id('acrCustomerReviewText').text
+            rating = self.driver.find_element_by_id(
+                'acrCustomerReviewText').text
+            no_of_ratings = self.get_no_of_ratings_int(rating)
+            return no_of_ratings
         except Exception as e:
+            return None
+
+    def get_no_of_ratings_int(self, rating):
+        if(rating):
+            rating = re.sub('\s', '', rating)
+            rating = re.sub('ratings', '', rating)
+            rating = re.sub(',', '', rating)
+            return int(rating)
+        else:
             return None
 
     def shorten_url(self, asin):
