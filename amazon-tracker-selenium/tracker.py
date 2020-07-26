@@ -164,7 +164,7 @@ class amazon_api:
             no_of_ratings = self.get_no_of_ratings_int(rating)
             return no_of_ratings
         except Exception as e:
-            return None
+            return int(0)
 
     def get_no_of_ratings_int(self, rating):
         if(rating):
